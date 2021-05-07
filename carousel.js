@@ -66,8 +66,30 @@ function onOrientationChange() {
   var checkedRadio = document.querySelector('input[name="orientation"]:checked');
   isHorizontal = checkedRadio.value == 'horizontal';
   rotateFn = isHorizontal ? 'rotateY' : 'rotateX';
+
   changeCarousel();
 }
 
 // set initials
 onOrientationChange();
+
+function getMaxImage() {
+  var maxDimension = 0;
+  var maxImage = null;
+
+  // Iterate through all the images.
+  var imgElements = document.images
+  for (var index in imgElements) {
+    var img = imgElements[index];
+    var currDimension = img.width;
+    if (currDimension  > maxDimension){
+       maxDimension = currDimension
+       maxImage = img;
+    }
+  }
+  // Check if an image has been found.
+  if (maxImage)
+    return maxImage;
+  else
+    return null;
+}

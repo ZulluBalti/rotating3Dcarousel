@@ -1,11 +1,6 @@
+import * as THREE from '/Plugins/three.module.js';
 
-
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js';
-import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/RGBELoader.js';
-import { RoughnessMipmapper } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/utils/RoughnessMipmapper.js';
-import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/OBJLoader.js';
-
+import {OBJLoader} from '/Plugins/OBJLoader.js';
 
 
 var renderer, scene, camera, banana;
@@ -42,7 +37,7 @@ var loadOBJ = function(){
 	var loader = new THREE.OBJLoader( manager );
 
 	//Launch loading of the obj file, addBananaInScene is the callback when it's ready
-	loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/127738/banana.obj', addBananaInScene);
+	loader.load( '/animations/banana.obj', addBananaInScene);
 
 };
 

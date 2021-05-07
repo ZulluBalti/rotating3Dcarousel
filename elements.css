@@ -6,11 +6,11 @@ body {
 }
 
 .scene {
-  border: 1px solid #CCC;
+  /* border: 1px solid #CCC; */
   margin: 40px 0;
   position: relative;
-  width: 210px;
-  height: 140px;
+  width: 510px;
+  height: 510px;
   margin: 80px auto;
   perspective: 1000px;
 }
@@ -26,20 +26,20 @@ body {
 
 .carousel__cell {
   position: absolute;
-  width: 190px;
-  height: 120px;
+  width: 500px;
+  height: 500px;
   left: 10px;
   top: 10px;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   line-height: 116px;
   font-size: 80px;
   font-weight: bold;
-  color: white;
+  /* color: white; */
   text-align: center;
   transition: transform 1s, opacity 1s;
 }
 
-.carousel__cell:nth-child(9n+1) { background: hsla(  0, 100%, 50%, 0.8);
+/* .carousel__cell:nth-child(9n+1) { background: hsla(  0, 100%, 50%, 0.8);
                           background-image: url(./animations/giphy.gif):
                           content:url(./animations/giphy.gif); }
 .carousel__cell:nth-child(9n+2) { background: hsla( 40, 100%, 50%, 0.8); }
@@ -49,7 +49,7 @@ body {
 .carousel__cell:nth-child(9n+6) { background: hsla(200, 100%, 50%, 0.8); }
 .carousel__cell:nth-child(9n+7) { background: hsla(240, 100%, 50%, 0.8); }
 .carousel__cell:nth-child(9n+8) { background: hsla(280, 100%, 50%, 0.8); }
-.carousel__cell:nth-child(9n+0) { background: hsla(320, 100%, 50%, 0.8); }
+.carousel__cell:nth-child(9n+0) { background: hsla(320, 100%, 50%, 0.8); } */
 
 .carousel__cell:nth-child(1) { transform: rotateY(  0deg) translateZ(288px); }
 .carousel__cell:nth-child(2) { transform: rotateY( 40deg) translateZ(288px); }
