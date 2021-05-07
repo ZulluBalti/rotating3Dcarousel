@@ -1,4 +1,12 @@
-import {OBJLoader} from './Plugins/OBJLoader.js';
+
+
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js';
+import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/RGBELoader.js';
+import { RoughnessMipmapper } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/utils/RoughnessMipmapper.js';
+import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/OBJLoader.js';
+
+
 
 var renderer, scene, camera, banana;
 
