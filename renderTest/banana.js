@@ -5,8 +5,8 @@ import {OBJLoader} from '/build/OBJLoader.js';
 
 var renderer, scene, camera, banana;
 
-var ww = window.innerWidth,
-	wh = window.innerHeight;
+var ww = 500,
+	wh = 500;
 
 const textureLoader = new THREE.TextureLoader();
 var texture = textureLoader.load('/animations/vmu/vmu_texture.png');
@@ -15,13 +15,14 @@ var texture = textureLoader.load('/animations/vmu/vmu_texture.png');
 
 function init(){
 
-	renderer = new THREE.WebGLRenderer({canvas : document.getElementById('c')});
+	renderer = new THREE.WebGLRenderer({canvas : document.getElementById('c'),
+  alpha: true});
 	renderer.setSize(ww,wh);
 
 	scene = new THREE.Scene();
 
 	camera = new THREE.PerspectiveCamera(50,ww/wh, 0.1, 10000 );
-	camera.position.set(0,0,5);
+	camera.position.set(0,0,7);
 	scene.add(camera);
 
 	//Add a light in the scene
