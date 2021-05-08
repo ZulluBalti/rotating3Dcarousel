@@ -8,10 +8,6 @@ var renderer2, scene2, camera2, plate;
 var ww = 500,
 	wh = 500;
 
-const textureLoader = new THREE.TextureLoader();
-//var texture = textureLoader.load('/animations/shoe/eb_house_plant_01_c.tga');
-
-
 
 function init(){
 
@@ -21,13 +17,15 @@ function init(){
 
 	scene2 = new THREE.Scene();
 
-	camera2 = new THREE.PerspectiveCamera(75,ww/wh, 0.1, 100000 );
-	camera2.position.set(0,5,36);
+	camera2 = new THREE.PerspectiveCamera(80,ww/wh, 0.01, 100000 );
+	//camera2.position.set(175,175,175); good distance for car
+	camera2.position.set(120,120,120);
+	camera2.lookAt(new THREE.Vector3(0,0,0));
 	scene2.add(camera2);
 
 	//Add a light in the scene
 	let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
-	directionalLight.position.set( 0, 0, 350 );
+	directionalLight.position.set( 0, 350, 350 );
 	directionalLight.lookAt(new THREE.Vector3(0,0,0));
 	scene2.add( directionalLight );
 
@@ -43,8 +41,9 @@ var loadOBJ = function(){
 	const loader = new OBJLoader(manager);
 
 	//Launch loading of the obj file, addplateInScene is the callback when it's ready
-	loader.load( '/animations/shoe/grind_shoe.obj', addPlateInScene);
-
+	//loader.load( '/animations/vmu/vmu.obj', addPlateInScene);
+	loader.load( '/animations/shoe/grind_plate.obj', addPlateInScene);
+	//loader.load( '/animations/shoe/Car-Prototype.obj', addPlateInScene);
 };
 
 var addPlateInScene = function(object){
@@ -61,8 +60,11 @@ var addPlateInScene = function(object){
 		}
 	});
 
+	//plate.scale(new THREE.vector3(2,2,2));
+
 	//Add the 3D object in the scene
 	scene2.add(plate);
+	plate.position.set(0, 0, 0);
 	render();
 };
 
