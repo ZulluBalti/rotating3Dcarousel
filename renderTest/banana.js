@@ -8,6 +8,11 @@ var renderer, scene, camera, banana;
 var ww = window.innerWidth,
 	wh = window.innerHeight;
 
+const textureLoader = new THREE.TextureLoader();
+var texture = textureLoader.load('/animations/vmu/vmu_texture.png');
+
+
+
 function init(){
 
 	renderer = new THREE.WebGLRenderer({canvas : document.getElementById('c')});
@@ -48,11 +53,13 @@ var addBananaInScene = function(object){
 	object.traverse( function ( child ) {
 		//This allow us to check if the children is an instance of the Mesh constructor
 		if(child instanceof THREE.Mesh){
-			child.material.color = new THREE.Color(0X00FF00);
+			//child.material.color = new THREE.Color(0X00FF00);
+      child.material.map = texture;
 			//Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
 			child.geometry.computeVertexNormals();
 		}
 	});
+
 	//Add the 3D object in the scene
 	scene.add(banana);
 	render();
