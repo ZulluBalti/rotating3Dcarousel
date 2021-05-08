@@ -16,6 +16,9 @@ function init(){
   const far = 5;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.z = 3;
+	camera.position.y = 3;
+	camera.position.x = 3;
+	camera.lookAt(new THREE.Vector3(0,0,0));
 
   const scene = new THREE.Scene();
 
@@ -27,6 +30,7 @@ function init(){
 	scene.add(light);
 	}
 
+
   const boxWidth = 1;
   const boxHeight = 1;
   const boxDepth = 1;
@@ -34,27 +38,47 @@ function init(){
 
   const material = new THREE.MeshPhongMaterial({color: 0x44aa88}); // greenish blue
 
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-
-	{
-			const objLoader = new OBJLoader();
-			objLoader.load('/animations/vmu/vmu.obj', (root) => {
-				scene.add(root);
-			});
-	}
+  // const cube = new THREE.Mesh(geometry, material);
+  // scene.add(cube);
 
 
-	function render(time) {
-    time *= 0.001;  // convert time to seconds
+	loadOBJ();
 
-    cube.rotation.x = time;
-    cube.rotation.y = time;
-
-    renderer.render(scene, camera);
-
-    requestAnimationFrame(render);
-  }
-  requestAnimationFrame(render);
 }
 init();
+
+function loadOBJ() {
+	//Manager from ThreeJs to track a loader and its status
+	var manager = new THREE.LoadingManager();
+	//Loader for Obj from Three.js
+	var loader = new THREE.OBJLoader( manager );
+	objLoader.load('/animations/vmu/vmu.obj', addVMU);
+
+}
+
+var addVMU = function(object) {
+	vmu = object;
+	root.rotateX(3.14/2);
+
+	//Go through all children of the loaded object and search for a Mesh
+	object.traverse( function ( child ) {
+		//This allow us to check if the children is an instance of the Mesh constructor
+		if(child instanceof THREE.Mesh){
+			child.material.color = new THREE.Color(0X00FF00);
+			//Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
+			child.geometry.computeVertexNormals();
+		}
+	});
+	//Add the 3D object in the scene
+	scene.add(vmu);
+	render();
+}
+
+function render(time) {
+	requestAnimationFrame(render);
+
+	//Turn the vmu
+	vmu.rotation.z += .01;
+
+	renderer.render(scene, camera);
+}
