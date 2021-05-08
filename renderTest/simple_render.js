@@ -46,14 +46,14 @@ function main() {
   {
     const skyColor = 0xB1E1FF;  // light blue
     const groundColor = 0xB97A20;  // brownish orange
-    const intensity = 1;
+    const intensity = .6;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     scene.add(light);
   }
 
   {
     const color = 0xFFFFFF;
-    const intensity = 1;
+    const intensity = .5;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(0, 10, 0);
     light.target.position.set(-5, 0, 0);
@@ -63,7 +63,7 @@ function main() {
 
   {
     const objLoader = new OBJLoader();
-    objLoader.load('https://threejsfundamentals.org/threejs/resources/models/windmill/windmill.obj', (root) => {
+    objLoader.load('/animations/vmu/vmu.obj', (root) => {
       scene.add(root);
     });
   }

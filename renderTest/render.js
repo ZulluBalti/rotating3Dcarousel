@@ -1,74 +1,60 @@
-import * as THREE from '/Plugins/three.module.js';
+import * as THREE from '/build/three.module.js';
 
-import {OBJLoader} from '/Plugins/OBJLoader.js';
+import {OrbitControls} from '/build/OrbitControls.js';
+import {OBJLoader} from '/build/OBJLoader.js';
 
 
-var renderer, scene, camera, banana;
-
-var ww = window.innerWidth,
-	wh = window.innerHeight;
 
 function init(){
 
-	renderer = new THREE.WebGLRenderer({canvas : document.getElementById('scene')});
-	renderer.setSize(ww,wh);
+	const canvas = document.querySelector('#c');
+  const renderer = new THREE.WebGLRenderer({canvas});
 
-	scene = new THREE.Scene();
+  const fov = 75;
+  const aspect = 2;  // the canvas default
+  const near = 0.1;
+  const far = 5;
+  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.z = 3;
 
-	camera = new THREE.PerspectiveCamera(50,ww/wh, 0.1, 10000 );
-	camera.position.set(0,0,500);
-	scene.add(camera);
+  const scene = new THREE.Scene();
 
-	//Add a light in the scene
-	directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
-	directionalLight.position.set( 0, 0, 350 );
-	directionalLight.lookAt(new THREE.Vector3(0,0,0));
-	scene.add( directionalLight );
+	{
+	const color = 0xFFFFFF;
+	const intensity = 1;
+	const light = new THREE.DirectionalLight(color, intensity);
+	light.position.set(-1, 2, 4);
+	scene.add(light);
+	}
 
-	//Load the obj file
-	loadOBJ();
+  const boxWidth = 1;
+  const boxHeight = 1;
+  const boxDepth = 1;
+  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+  const material = new THREE.MeshPhongMaterial({color: 0x44aa88}); // greenish blue
+
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+	{
+			const objLoader = new OBJLoader();
+			objLoader.load('/animations/vmu/vmu.obj', (root) => {
+				scene.add(root);
+			});
+	}
+
+
+	function render(time) {
+    time *= 0.001;  // convert time to seconds
+
+    cube.rotation.x = time;
+    cube.rotation.y = time;
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
 }
-
-var loadOBJ = function(){
-
-	//Manager from ThreeJs to track a loader and its status
-	var manager = new THREE.LoadingManager();
-	//Loader for Obj from Three.js
-	var loader = new THREE.OBJLoader( manager );
-
-	//Launch loading of the obj file, addBananaInScene is the callback when it's ready
-	loader.load( '/animations/banana.obj', addBananaInScene);
-
-};
-
-var addBananaInScene = function(object){
-	banana = object;
-	//Move the banana in the scene
-	banana.rotation.x = Math.PI/2;
-	banana.position.y = -200;
-	banana.position.z = 50;
-	//Go through all children of the loaded object and search for a Mesh
-	object.traverse( function ( child ) {
-		//This allow us to check if the children is an instance of the Mesh constructor
-		if(child instanceof THREE.Mesh){
-			child.material.color = new THREE.Color(0X00FF00);
-			//Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
-			child.geometry.computeVertexNormals();
-		}
-	});
-	//Add the 3D object in the scene
-	scene.add(banana);
-	render();
-};
-
-
-var render = function () {
-	requestAnimationFrame(render);
-
-	//Turn the banana
-	banana.rotation.z += .01;
-
-	renderer.render(scene, camera);
-};
-
 init();
